@@ -86,26 +86,7 @@ class BENGE(Dataset):
             lblfile = f"esaworldcover_{os.path.splitext(imgfile)[0]}.tif"
             # imgfile und lblfile einlesen
 
-            ### IMG UND LBL WERDEN HIER NIE AUFGERUFEN. WARUM? #######
-            # with rio.open(self.data_dir + "/" + self.split + "/" + imgfile) as sentinelimage:    
-                # img = sentinelimage.shape   
-                # img = ... # shape: [4, 120, 120]
-        
-            # with rio.open(self.data_dir + "/"+ self.split + "/" + lblfile) as labelimage:
-                # lbl = labelimage.shape
-                # lbl = ...   # shape: [120, 120]
-            
-            # # retrieve Sentinel-2 data
-            ################# ORIGINALER CODE ###############################################################
-            # s2 = np.empty((4, 120, 120))
-            # for i, band in enumerate(self.s2_bands):
-                # with rio.open(f"{self.data_dir}/sentinel-2/{patch_id}/{patch_id}_B0{band}.tif") as dataset:
-            #         data = dataset.read(1)
-            #     if i < 3:
-            #         s2[i,:,:] = data/3000  # normalize Sentinel-2 data
-            #     else:
-            #         s2[i,:,:] = data/6000  # normalize Sentinel-2 data
-            ###################### ORIGINALER CODE ENDE ###################################################### 
+ 
 
             s2 = np.empty((4, 120, 120))
             # print("Self.s2_bands: ")
@@ -121,16 +102,7 @@ class BENGE(Dataset):
                 else:
                     s2[i,:,:] = data/6000  # normalize Sentinel-2 data    
 
-            ################################ ORIGINALER CODE ##################################################
-            # extract lulc data
-            # with rio.open(f"{self.data_dir}/esaworldcover/{patch_id}_esaworldcover.tif") as dataset:
-            #     ewc_data = dataset.read(1)
-            # ewc_mask = ewc_data.astype(float)   
-            # ewc_mask[ewc_mask == 100] = 110  # fix some irregular class labels
-            # ewc_mask[ewc_mask == 95] = 100   # fix some irregular class labels
-            # ewc_mask = ewc_mask / 10 - 1 # transform to scale [0, 11]
-            ############################## ORIGINALER CODE ENDE ##################################
-
+  
             # extract lulc data
             with rio.open(f"{self.data_dir}/{self.split}/esaworldcover_{idx+1}.tif") as dataset:
                 ewc_data = dataset.read(1)
@@ -147,13 +119,7 @@ class BENGE(Dataset):
                 }
 
             return sample
-
-        ##### ORIGINALER CODE #######
-        # def __len__(self):
-        #     """Return length of this dataset."""
-        #     return self.meta.shape[0]
-        ##### ORIGINALER CODE ENDE ######
-
+         
         def __len__(self):
             """Return length of this dataset."""
             return int(len(self.imgfiles)/2)
