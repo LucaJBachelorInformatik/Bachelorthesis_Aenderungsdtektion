@@ -1,4 +1,4 @@
-
+# Code received from Prof. Mommert, then modified. 
 # %%
 # system level modules for handling files and file structures
 import os
